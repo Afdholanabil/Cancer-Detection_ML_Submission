@@ -80,12 +80,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun analyzeImage() {
-        showToast("Analyze")
+        moveToResult()
     }
 
     private fun moveToResult() {
-        val intent = Intent(this, ResultActivity::class.java)
-        startActivity(intent)
+        currentImageUri?.let {
+            val intent = Intent(this, ResultActivity::class.java)
+            intent.putExtra("currentImageUri", it) // Mengirim URI gambar saat ini ke ResultActivity
+            startActivity(intent)
+        } ?: showToast("No image selected")
+
     }
 
     private fun showToast(message: String) {
