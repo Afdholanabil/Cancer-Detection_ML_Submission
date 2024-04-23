@@ -6,4 +6,7 @@
     <string name="analyze">Analyze</string>
     <string name="result">Hasil Analisis</string>
     <string name="image_priview">Image Priview</string>
+    <string name="cancer_detection">Cancer Detection</string>
+    <string name="please_pick_photo_to_analyze">Please pick photo to analyze !</string>
+    <string name="pick_photo">Select Photo</string>
 </resources>

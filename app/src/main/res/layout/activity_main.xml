@@ -15,7 +15,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+<TextView
+    android:id="@+id/tv_title"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/cancer_detection"
+    android:textSize="32sp"
+    android:fontFamily="@font/satoshiblack"
+    android:layout_marginStart="20dp"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"/>
 
+    <TextView
+        android:id="@+id/tv_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/please_pick_photo_to_analyze"
+        android:textSize="18sp"
+        android:fontFamily="@font/interregular"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title"/>
     <ImageView
         android:id="@+id/previewImageView"
         android:layout_width="0dp"
@@ -27,17 +47,21 @@
         app:layout_constraintBottom_toTopOf="@+id/galleryButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_place_holder" />
+        app:layout_constraintTop_toBottomOf="@id/tv_subtitle"
+        app:srcCompat="@drawable/image" />
 
-    <Button
+    <TextView
         android:id="@+id/galleryButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/gallery"
+        android:text="@string/pick_photo"
+        android:textSize="18sp"
+        android:fontFamily="@font/satoshiblack"
+        android:textColor="@color/p2"
+        android:pointerIcon="hand"
         app:layout_constraintBottom_toTopOf="@+id/analyzeButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
