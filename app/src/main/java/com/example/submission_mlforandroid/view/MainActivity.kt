@@ -21,21 +21,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
 
     private var currentImageUri: Uri? = null
-    private var afterUCropImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener { analyzeImage() }
     }
 
     private fun startGallery() {
+        if (currentImageUri == null)
         launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        else {
+            currentImageUri = null
+            binding.previewImageView.setImageURI(null)
+            launcherGallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
     }
 
     private val launcherGallery = registerForActivityResult(
@@ -43,35 +46,35 @@ class MainActivity : AppCompatActivity() {
     ) { uri: Uri? ->
         if (uri != null) {
             currentImageUri = uri
-            showImage()
-            startUCrop()
+            startUCrop(uri)
         } else {
-            Log.d("Photo Picker", "No media selected")
+            showToast("No media selected")
         }
     }
 
-    private fun startUCrop() {
+    private fun startUCrop(uri: Uri) {
         val destinationFileName = "cropped_image.jpg"
-        val uCrop = UCrop.of(currentImageUri!!, Uri.fromFile(File(cacheDir, destinationFileName)))
+        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, destinationFileName)))
         uCrop.start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == RESULT_OK && requestCode == UCrop.REQUEST_CROP) {
-            val resultUri = UCrop.getOutput(data!!)
-            if (resultUri != null) {
-                afterUCropImageUri = resultUri
-                showImage()
-            } else {
-                showToast("Failed to crop image")
+        if (resultCode == RESULT_OK) {
+            if (requestCode == UCrop.REQUEST_CROP) {
+                val resultUri = UCrop.getOutput(data!!)
+                if (resultUri != null) {
+                    currentImageUri = resultUri // Menggunakan hasil crop sebagai gambar saat ini
+                    showImage()
+                } else {
+                    showToast("Failed to crop image")
+                }
             }
         }
     }
 
     private fun showImage() {
-        afterUCropImageUri?.let {
-            Log.d("Image URI", "showImage: $it")
+        currentImageUri?.let {
             binding.previewImageView.setImageURI(it)
         }
     }
@@ -91,5 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
+        private const val PICK_IMAGE_REQUEST = 1
     }
 }
