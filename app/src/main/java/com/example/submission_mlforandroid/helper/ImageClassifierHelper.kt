@@ -2,7 +2,9 @@ package com.example.submission_mlforandroid.helper
 
 import android.content.Context
 import android.net.Uri
+import org.tensorflow.lite.task.core.BaseOptions
 import org.tensorflow.lite.task.vision.classifier.Classifications
+import org.tensorflow.lite.task.vision.classifier.ImageClassifier
 import java.lang.Error
 
 class ImageClassifierHelper(
@@ -13,6 +15,10 @@ class ImageClassifierHelper(
     val classifierListener: ClassifierListener?
 ) {
 
+    init {
+        setupImageClassifier()
+    }
+
     interface ClassifierListener {
         fun onError(error: String)
         fun onResult(
@@ -20,8 +26,14 @@ class ImageClassifierHelper(
             inferenceTime : Long
         )
     }
-    private fun setupImageClassifier() {
 
+    private fun setupImageClassifier() {
+        val optionBuilder = ImageClassifier.ImageClassifierOptions.builder()
+            .setScoreThreshold(threshold)
+            .setMaxResults(masResult)
+        val baseOptionBuilder = BaseOptions.builder()
+            .setNumThreads(4)
+        optionBuilder.setBaseOptions(baseOptionBuilder.build())
     }
 
     fun classifyStaticImage(imageUri: Uri) {
