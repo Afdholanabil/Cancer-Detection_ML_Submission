@@ -1,7 +1,8 @@
-package com.example.submission_mlforandroid
+package com.example.submission_mlforandroid.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.submission_mlforandroid.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Submission_MLforAndroid</string>
+    <string name="camera_x">CameraX</string>
+    <string name="camera">Kamera</string>
+    <string name="gallery">Galeri</string>
+    <string name="analyze">Analyze</string>
+    <string name="result">Hasil Analisis</string>
+    <string name="image_priview">Image Priview</string>
 </resources>
