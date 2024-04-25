@@ -8,4 +8,9 @@
     </style>
 
     <style name="Theme.Submission_MLforAndroid" parent="Base.Theme.Submission_MLforAndroid" />
+
+    <style name="CustomToolbarStyleSubTitle" parent="@style/Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:fontFamily">@font/satoshiblack</item>
+        <item name="android:textSize">28sp</item>
+    </style>
 </resources>

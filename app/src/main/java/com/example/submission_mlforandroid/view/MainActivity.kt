@@ -29,6 +29,17 @@ class MainActivity : AppCompatActivity() {
 
         binding.galleryButton.setOnClickListener { startGallery() }
         binding.analyzeButton.setOnClickListener { analyzeImage() }
+
+        binding.toolbar.setOnMenuItemClickListener { menutItem ->
+            when(menutItem.itemId) {
+                R.id.cancerSaved -> {
+                    val intent = Intent(this, CancerSavedActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     private fun startGallery() {
@@ -64,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             if (requestCode == UCrop.REQUEST_CROP) {
                 val resultUri = UCrop.getOutput(data!!)
                 if (resultUri != null) {
-                    currentImageUri = resultUri // Menggunakan hasil crop sebagai gambar saat ini
+                    currentImageUri = resultUri
                     showImage()
                 } else {
                     showToast("Failed to crop image")
@@ -95,6 +106,8 @@ class MainActivity : AppCompatActivity() {
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+
 
     companion object {
         private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
