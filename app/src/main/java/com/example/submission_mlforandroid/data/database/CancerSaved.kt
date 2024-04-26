@@ -14,7 +14,7 @@ data class CancerSaved (
     var id : Int = 0,
 
     @ColumnInfo(name = "imageUri")
-    var imageUrl: String? = "",
+    var imageUrl: String? = null,
 
     @ColumnInfo(name = "resultDetection")
     var resultDetection: String? = null,

@@ -11,7 +11,6 @@ import java.util.concurrent.Executors
 class CancerSavedRepository(application: Application) {
     private val mCancerSavedDao : CancerSavedDao
     private val executorService : ExecutorService = Executors.newSingleThreadExecutor()
-
     init {
         val db = CancerSavedRoomDatabase.getDatabase(application)
         mCancerSavedDao = db.cancerSaveDao()

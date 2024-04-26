@@ -18,8 +18,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL","\"https://newsapi.org/v2/top-headlines?q=cancer&category=health&language=en&apiKey=\"")
+        buildConfigField("String", "BASE_URL_Q","\"https://newsapi.org/v2/top-headlines?q=cancer&category=health&language=en&apiKey=\"")
+        buildConfigField("String", "BASE_URL","\"https://newsapi.org/v2/\"")
         buildConfigField("String","API_KEY","\"52a0cc0c16c848c787ecd2002ebb6611\"")
+        buildConfigField("String","API_KEY_ALL","\"cancer&category=health&language=en&apiKey=52a0cc0c16c848c787ecd2002ebb6611\"")
     }
 
     buildTypes {

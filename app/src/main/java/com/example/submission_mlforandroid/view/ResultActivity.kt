@@ -3,15 +3,17 @@ package com.example.submission_mlforandroid.view
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
-import com.example.submission_mlforandroid.R
 import com.example.submission_mlforandroid.databinding.ActivityResultBinding
 import com.example.submission_mlforandroid.helper.ImageClassifierHelper
 import com.example.submission_mlforandroid.view.viewmodel.ResultViewModel
 import com.example.submission_mlforandroid.view.viewmodel.ViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import org.tensorflow.lite.task.vision.classifier.Classifications
-import java.text.NumberFormat
+import java.lang.IllegalStateException
+
 
 class ResultActivity : AppCompatActivity() {
 
@@ -23,13 +25,13 @@ class ResultActivity : AppCompatActivity() {
         ViewModelFactory.getInstance(application)
     }
 
-    private var isSaved = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         image = intent.getParcelableExtra<Uri>("currentImageUri")!!
+
         binding.resultImage.setImageURI(image)
 
         imageClassifierHelper = ImageClassifierHelper(context = this, classifierListener = object : ImageClassifierHelper.ClassifierListener {
@@ -43,23 +45,29 @@ class ResultActivity : AppCompatActivity() {
         analyzeImage()
 
         binding.btnSaveResult.setOnClickListener {
-            val imgUri = binding.resultImage
+
             val resultC = binding.resultTextCategory.text
             val resultScore = binding.resultTextScore.text
             val score = resultScore.toString()
-            resultViewModel.insert(imgUri.toString(),resultC.toString(),score.toFloat() )
+            try {
+                resultViewModel.insert(image,resultC.toString(),score.toFloat())
+                Snackbar.make(window.decorView.rootView, "Hasil analisis berhasil disimpan !", Snackbar.LENGTH_SHORT).show()
+                binding.btnSaveResult.isEnabled = false
+            } catch (e:IllegalStateException) {
+                binding.btnSaveResult.isEnabled = true
+                Log.e(TAG, "Onfailure : ${e.message}")
+                Snackbar.make(window.decorView.rootView, "Gagal menyimpan hasil analisis !, coba lagi nanti", Snackbar.LENGTH_SHORT).show()
+            }
+
         }
     }
+
 
     private fun analyzeImage() {
         imageClassifierHelper.classifyStaticImage(image)
     }
 
     private fun showClassificationResult(result: List<Classifications>?, inferenceTime: Long) {
-//        val resultText = result?.joinToString(separator = "\n") {
-//            "${it.categories}: ${it.headIndex}"
-//        } ?: "No result"
-//        binding.resultText.text = resultText
 
         result?.let {
             val sortedCategories =
@@ -70,16 +78,18 @@ class ResultActivity : AppCompatActivity() {
                 }
             val resultScore = sortedCategories.joinToString("\n") {
                 it.score.toString()
-            } ?: "No Result"
+            }
             binding.resultTextCategory.text = displayResultCategory
             binding.resultTextScore.text = resultScore
 
         }
-
-
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val TAG = "ResultActivity"
     }
 }

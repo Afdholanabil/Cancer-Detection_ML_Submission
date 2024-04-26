@@ -1,20 +1,19 @@
 package com.example.submission_mlforandroid.view
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import com.example.submission_mlforandroid.R
 import com.example.submission_mlforandroid.databinding.ActivityMainBinding
 import com.yalantis.ucrop.UCrop
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,6 +36,12 @@ class MainActivity : AppCompatActivity() {
                     startActivity(intent)
                     true
                 }
+                R.id.articelCancer -> {
+                    val intent = Intent(this, ArticelActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
+
                 else -> false
             }
         }
@@ -64,8 +69,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startUCrop(uri: Uri) {
-        val destinationFileName = "cropped_image.jpg"
-        val uCrop = UCrop.of(uri, Uri.fromFile(File(cacheDir, destinationFileName)))
+        val timeNow = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val destinationFileName = "cropped_image_$timeNow.jpg"
+        val outputFileUri = Uri.fromFile(File(cacheDir, destinationFileName))
+
+        val uCrop = UCrop.of(uri, outputFileUri)
         uCrop.start(this)
     }
 
@@ -97,20 +105,12 @@ class MainActivity : AppCompatActivity() {
     private fun moveToResult() {
         currentImageUri?.let {
             val intent = Intent(this, ResultActivity::class.java)
-            intent.putExtra("currentImageUri", it) // Mengirim URI gambar saat ini ke ResultActivity
+            intent.putExtra("currentImageUri", it)
             startActivity(intent)
         } ?: showToast("No image selected")
-
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
-
-
-
-    companion object {
-        private const val REQUIRED_PERMISSION = Manifest.permission.CAMERA
-        private const val PICK_IMAGE_REQUEST = 1
     }
 }

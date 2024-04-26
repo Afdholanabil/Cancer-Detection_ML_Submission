@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.SystemClock
 import android.util.Log
 import com.example.submission_mlforandroid.R
-
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.task.core.BaseOptions
 import org.tensorflow.lite.task.vision.classifier.Classifications
@@ -84,7 +83,6 @@ class ImageClassifierHelper(
             e.printStackTrace()
             null
         }
-
     }
 
     private fun resizeBitmap(bitmap: Bitmap, width: Int, height: Int): Bitmap {

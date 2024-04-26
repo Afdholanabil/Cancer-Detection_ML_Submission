@@ -18,13 +18,13 @@ class ViewModelFactory private constructor(private val mapplication: Application
             }
             return INSTANCE as ViewModelFactory
         }
-
     }
-
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ResultViewModel::class.java)) {
             return ResultViewModel(mapplication) as T
+        } else if (modelClass.isAssignableFrom(CancerSavedViewModel::class.java)) {
+            return CancerSavedViewModel(mapplication) as T
         }
 
         throw IllegalArgumentException("Unknown ViewModel Class ${modelClass.name}")

@@ -16,4 +16,11 @@
     <string name="detectiion">Detectiion</string>
     <string name="confidence_score">Confidence Score: </string>
     <string name="save_result">Save Result</string>
+    <string name="menu2">menu2</string>
+    <string name="related_articel">Related Articel</string>
+    <string name="judul">Judul</string>
+    <string name="source">Source</string>
+    <string name="deskripsi">Deskripsi</string>
+    <string name="Lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie ligula nec arcu sollicitudin, quis placerat odio condimentum. In sed nisl auctor, interdum urna maximus, molestie urna.</string>
+    <string name="analyze_result">Analyze Result</string>
 </resources>

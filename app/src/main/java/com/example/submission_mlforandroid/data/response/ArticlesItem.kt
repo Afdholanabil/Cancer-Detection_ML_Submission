@@ -17,14 +17,14 @@ data class ArticlesItem(
 	val description: String,
 
 	@field:SerializedName("source")
-	val source: Source,
+	val source: Source?,
 
 	@field:SerializedName("title")
-	val title: String,
+	val title: String?,
 
 	@field:SerializedName("url")
-	val url: String,
+	val url: String?,
 
 	@field:SerializedName("content")
-	val content: Any
+	val content: Any?
 )

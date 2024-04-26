@@ -8,6 +8,12 @@
             android:title="@string/menu1"
             app:showAsAction="ifRoom"/>
 
+        <item
+            android:id="@+id/articelCancer"
+            android:icon="@drawable/paper"
+            android:title="@string/menu2"
+            app:showAsAction="ifRoom"/>
+
 
 
 </menu>
